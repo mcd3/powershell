@@ -1,0 +1,17 @@
+ $directorio = Get-Location
+ Get-ChildItem -Path $directorio -File | ForEach-Object {
+      $fechaModificacion = $_.LastWriteTime
+
+      if ($fechaModificacion) {
+          $nombreCarpeta = "{0:yyyy-MM-dd}" -f $fechaModificacion
+          $rutaCarpetaDestino = Join-Path -Path $directorio -ChildPath $nombreCarpeta
+
+          if (-not (Test-Path -Path $rutaCarpetaDestino)) {
+              New-Item -Path $rutaCarpetaDestino -ItemType Directory | Out-Null
+          }
+
+          Move-Item -Path $_.FullName -Destination $rutaCarpetaDestino
+      } else {
+          Write-Warning "Archivo sin fecha válida: $($_.Name)"
+      }
+  }
