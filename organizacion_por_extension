@@ -1,3 +1,4 @@
+# Crea una carpeta por cada extensión de los archivos y los mueve a su carpeta.
 # Obtiene la ruta del directorio actual donde se está ejecutando el script
 $sourcePath = Get-Location
 
