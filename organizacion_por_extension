@@ -1,28 +1,29 @@
 # Crea una carpeta por cada extensión de los archivos y los mueve a su carpeta.
 # Obtiene la ruta del directorio actual donde se está ejecutando el script
 $sourcePath = Get-Location
-
-# Obtiene todos los archivos (no carpetas) en el directorio actual
 $files = Get-ChildItem -Path $sourcePath -File
 
-# Itera sobre cada archivo encontrado
 foreach ($file in $files) {
-    # Extrae la extensión del archivo (por ejemplo, "txt") y elimina el punto inicial
+    # Extrae la extensión
     $extension = $file.Extension.TrimStart('.')
-
-    # Si el archivo no tiene extensión, se asigna un nombre de carpeta predeterminado
+    
     if ([string]::IsNullOrEmpty($extension)) {
         $extension = "SinExtension"
     }
 
-    # Construye la ruta completa de destino donde se moverá el archivo, usando la extensión como nombre de carpeta
     $destinationPath = Join-Path -Path $sourcePath -ChildPath $extension
 
-    # Si la carpeta de destino no existe, la crea
+    # Crear carpeta si no existe
     if (-not (Test-Path -Path $destinationPath)) {
-        New-Item -Path $destinationPath -ItemType Directory
+        New-Item -Path $destinationPath -ItemType Directory | Out-Null
     }
 
-    # Mueve el archivo al directorio correspondiente según su extensión
-    Move-Item -Path $file.FullName -Destination $destinationPath
+    # Verificar si ya existe el archivo en destino
+    $destFile = Join-Path -Path $destinationPath -ChildPath $file.Name
+    if (-not (Test-Path -Path $destFile)) {
+        Move-Item -Path $file.FullName -Destination $destinationPath
+        Write-Host "Movido: $($file.Name) → $extension"
+    } else {
+        Write-Warning "Ya existe el archivo '$($file.Name)' en $extension. No se movió."
+    }
 }
