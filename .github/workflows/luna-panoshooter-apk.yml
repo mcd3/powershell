@@ -1,4 +1,4 @@
-name: Build Luna PanoShooter APK
+name: Build CrecemosUno PanoPilot APK
 
 on:
   pull_request:
@@ -38,6 +38,11 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Apply visible product name
+        run: |
+          sed -i 's/Luna PanoShooter/CrecemosUno PanoPilot/g' luna-panoshooter/app/src/main/java/es/mcd3/lunapanoshooter/LunaAccessibilityService.java
+          sed -i 's/LunaPanoShooterSequence/CrecemosUnoPanoPilotSequence/g' luna-panoshooter/app/src/main/java/es/mcd3/lunapanoshooter/LunaAccessibilityService.java
+
       - name: Build debug APK
         working-directory: luna-panoshooter
         run: gradle --no-daemon :app:assembleDebug
@@ -45,6 +50,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: luna-panoshooter-beta
+          name: crecemosuno-panopilot-beta
           path: luna-panoshooter/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
