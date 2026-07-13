@@ -3,6 +3,7 @@ package es.mcd3.lunapanoshooter;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.Gravity;
@@ -33,7 +34,7 @@ public final class MainActivity extends Activity {
         ));
 
         TextView title = new TextView(this);
-        title.setText("Luna PanoShooter");
+        title.setText("CrecemosUno PanoPilot");
         title.setTextSize(28f);
         title.setTextColor(Color.rgb(20, 20, 20));
         title.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -99,8 +100,20 @@ public final class MainActivity extends Activity {
         sequence.setTextSize(15f);
         sequence.setTextColor(Color.GRAY);
         sequence.setGravity(Gravity.CENTER_HORIZONTAL);
-        sequence.setPadding(0, dp(22), 0, 0);
+        sequence.setPadding(0, dp(22), 0, dp(8));
         root.addView(sequence, matchWrap());
+
+        TextView website = new TextView(this);
+        website.setText("crecemos.uno");
+        website.setTextSize(16f);
+        website.setTextColor(Color.rgb(25, 118, 210));
+        website.setGravity(Gravity.CENTER_HORIZONTAL);
+        website.setPadding(dp(8), dp(8), dp(8), dp(8));
+        website.setOnClickListener(v -> {
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://crecemos.uno"));
+            startActivity(browserIntent);
+        });
+        root.addView(website, matchWrap());
 
         setContentView(scrollView);
     }
