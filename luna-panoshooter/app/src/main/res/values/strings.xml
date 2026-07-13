@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Luna PanoShooter</string>
-    <string name="accessibility_service_name">Control Luna PanoShooter</string>
+    <string name="app_name">CrecemosUno PanoPilot</string>
+    <string name="accessibility_service_name">Control CrecemosUno PanoPilot</string>
     <string name="accessibility_description">Controla mediante gestos la app Insta360 para capturar una esfera de 31 fotografías.</string>
 </resources>
